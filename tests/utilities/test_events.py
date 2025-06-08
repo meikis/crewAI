@@ -812,7 +812,8 @@ def test_reasoning_events_attach_to_correct_task():
         backstory="I test reasoning",
         llm="gpt-4o-mini",
         reasoning=True,
-        verbose=True
+        verbose=True,
+        inject_date=False
     )
 
     # Create two tasks
