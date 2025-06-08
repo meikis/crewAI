@@ -37,14 +37,15 @@ def test_agent_inject_date():
 
 def test_agent_without_inject_date():
     """Test that without inject_date flag, no date is injected.
-    
-    Tests that when inject_date=False (default), no date is added to the task description.
+
+    Tests that when inject_date=False (explicitly set), no date is added to the task description.
+    Note: inject_date=True is now the default as of this PR.
     """
     agent = Agent(
         role="test_agent",
         goal="test_goal",
         backstory="test_backstory",
-        # inject_date is False by default
+        inject_date=False,
     )
     
     task = Task(

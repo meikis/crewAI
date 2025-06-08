@@ -479,5 +479,14 @@ class EventListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
+    def cleanup(self):
+        """Cleanup all registered event handlers and resources."""
+        if hasattr(self, 'formatter') and self.formatter:
+            self.formatter.cleanup()
+        
+        self.execution_spans.clear()
+        if hasattr(self, 'text_stream'):
+            self.text_stream.close()
+
 
 event_listener = EventListener()

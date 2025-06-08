@@ -1358,9 +1358,10 @@ class ConsoleFormatter:
             self._spinner_timer = None
 
     def _start_spinner_timer(self) -> None:
-        """Start the spinner animation timer."""
+        """Start spinner timer with proper resource management."""
         if self._spinner_timer is not None:
-            return
+            self._spinner_timer.cancel()
+            self._spinner_timer = None
 
         def update_spinners():
             if not self._spinning_branches:
@@ -1392,11 +1393,14 @@ class ConsoleFormatter:
                 self.print(tree_to_show)
 
             # Schedule next update
-            timer = threading.Timer(0.2, update_spinners)
-            self._spinner_timer = timer
-            timer.start()
+            if self._spinning_branches:
+                timer = threading.Timer(0.2, update_spinners)
+                timer.daemon = True
+                self._spinner_timer = timer
+                timer.start()
 
         timer = threading.Timer(0.2, update_spinners)
+        timer.daemon = True
         self._spinner_timer = timer
         timer.start()
 
