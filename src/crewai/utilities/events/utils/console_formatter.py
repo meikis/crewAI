@@ -1410,8 +1410,10 @@ class ConsoleFormatter:
             self._spinner_timer.cancel()
             self._spinner_timer = None
         self._spinning_branches.clear()
-        if self.spinner.is_spinning:
+        if hasattr(self.spinner, 'is_spinning') and self.spinner.is_spinning:
             self.spinner.stop()
+        if self._live:
+            self._live.stop()
 
     def __del__(self) -> None:
         """Destructor to ensure cleanup on object deletion."""

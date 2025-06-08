@@ -65,6 +65,7 @@ base_agent = Agent(
     llm="gpt-4o-mini",
     goal="Just say hi",
     backstory="You are a helpful assistant that just says hi",
+    inject_date=False,
 )
 
 base_task = Task(
@@ -257,6 +258,7 @@ def test_task_emits_failed_event_on_execution_error():
             role="base_agent",
             goal="Just say hi",
             backstory="You are a helpful assistant that just says hi",
+            inject_date=False,
         )
         task = Task(
             description="Just say hi",
@@ -354,6 +356,7 @@ def test_tools_emits_finished_events():
         goal="Just say hi",
         backstory="You are a helpful assistant that just says hi",
         tools=[SayHiTool()],
+        inject_date=False,
     )
 
     task = Task(
@@ -398,6 +401,7 @@ def test_tools_emits_error_events():
         backstory="You are an assistant that tests error handling",
         tools=[ErrorTool()],
         llm=LLM(model="gpt-4o-mini"),
+        inject_date=False,
     )
 
     task = Task(

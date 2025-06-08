@@ -15,7 +15,7 @@ from crewai.utilities.evaluators.crew_evaluator_handler import (
 class InternalCrewEvaluator:
     @pytest.fixture
     def crew_planner(self):
-        agent = Agent(role="Agent 1", goal="Goal 1", backstory="Backstory 1")
+        agent = Agent(role="Agent 1", goal="Goal 1", backstory="Backstory 1", inject_date=False)
         task = Task(
             description="Task 1",
             expected_output="Output 1",
@@ -52,11 +52,12 @@ class InternalCrewEvaluator:
             role="Evaluator Agent",
             goal="Evaluate the performance of the agents in the crew",
             backstory="Master in Evaluation",
+            inject_date=False,
         )
         task_to_evaluate = Task(
             description="Task 1",
             expected_output="Output 1",
-            agent=Agent(role="Agent 1", goal="Goal 1", backstory="Backstory 1"),
+            agent=Agent(role="Agent 1", goal="Goal 1", backstory="Backstory 1", inject_date=False),
         )
         task_output = "Task Output 1"
         task = crew_planner._evaluation_task(

@@ -23,17 +23,17 @@ class InternalCrewPlanner:
             Task(
                 description="Task 1",
                 expected_output="Output 1",
-                agent=Agent(role="Agent 1", goal="Goal 1", backstory="Backstory 1"),
+                agent=Agent(role="Agent 1", goal="Goal 1", backstory="Backstory 1", inject_date=False),
             ),
             Task(
                 description="Task 2",
                 expected_output="Output 2",
-                agent=Agent(role="Agent 2", goal="Goal 2", backstory="Backstory 2"),
+                agent=Agent(role="Agent 2", goal="Goal 2", backstory="Backstory 2", inject_date=False),
             ),
             Task(
                 description="Task 3",
                 expected_output="Output 3",
-                agent=Agent(role="Agent 3", goal="Goal 3", backstory="Backstory 3"),
+                agent=Agent(role="Agent 3", goal="Goal 3", backstory="Backstory 3", inject_date=False),
             ),
         ]
         return CrewPlanner(tasks, None)
@@ -44,7 +44,7 @@ class InternalCrewPlanner:
             Task(
                 description="Task 1",
                 expected_output="Output 1",
-                agent=Agent(role="Agent 1", goal="Goal 1", backstory="Backstory 1"),
+                agent=Agent(role="Agent 1", goal="Goal 1", backstory="Backstory 1", inject_date=False),
             )
         ]
         planning_agent_llm = "gpt-3.5-turbo"
@@ -80,6 +80,7 @@ class InternalCrewPlanner:
             role="Planning Agent",
             goal="Plan Step by Step Plan",
             backstory="Master in Planning",
+            inject_date=False,
         )
         tasks_summary = "Summary of tasks"
         task = crew_planner._create_planner_task(planning_agent, tasks_summary)
@@ -146,7 +147,8 @@ class InternalCrewPlanner:
                 tools=[tool1, tool2],
                 knowledge_sources=[
                     StringKnowledgeSource(content="Test knowledge content")
-                ]
+                ],
+                inject_date=False,
             )
         )
 

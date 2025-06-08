@@ -35,7 +35,7 @@ def test_agent_llm_creation_with_env_vars():
     os.environ["OPENAI_MODEL_NAME"] = "gpt-4-turbo"
 
     # Create an agent without specifying LLM
-    agent = Agent(role="test role", goal="test goal", backstory="test backstory")
+    agent = Agent(role="test role", goal="test goal", backstory="test backstory", inject_date=False)
 
     # Check if LLM is created correctly
     assert isinstance(agent.llm, LLM)
@@ -49,7 +49,7 @@ def test_agent_llm_creation_with_env_vars():
     del os.environ["OPENAI_MODEL_NAME"]
 
     # Create an agent without specifying LLM
-    agent = Agent(role="test role", goal="test goal", backstory="test backstory")
+    agent = Agent(role="test role", goal="test goal", backstory="test backstory", inject_date=False)
 
     # Check if LLM is created correctly
     assert isinstance(agent.llm, LLM)
@@ -67,7 +67,7 @@ def test_agent_llm_creation_with_env_vars():
 
 
 def test_agent_creation():
-    agent = Agent(role="test role", goal="test goal", backstory="test backstory")
+    agent = Agent(role="test role", goal="test goal", backstory="test backstory", inject_date=False)
 
     assert agent.role == "test role"
     assert agent.goal == "test goal"
@@ -82,6 +82,7 @@ def test_agent_with_only_system_template():
         backstory="Test Backstory",
         allow_delegation=False,
         system_template="You are a test agent...",
+        inject_date=False,
         # prompt_template is intentionally missing
     )
 
@@ -98,6 +99,7 @@ def test_agent_with_only_prompt_template():
         backstory="Test Backstory",
         allow_delegation=False,
         prompt_template="You are a test agent...",
+        inject_date=False,
         # prompt_template is intentionally missing
     )
 
@@ -115,6 +117,7 @@ def test_agent_with_missing_response_template():
         allow_delegation=False,
         system_template="You are a test agent...",
         prompt_template="This is a test prompt...",
+        inject_date=False,
         # response_template is intentionally missing
     )
 
@@ -124,14 +127,14 @@ def test_agent_with_missing_response_template():
 
 
 def test_agent_default_values():
-    agent = Agent(role="test role", goal="test goal", backstory="test backstory")
+    agent = Agent(role="test role", goal="test goal", backstory="test backstory", inject_date=False)
     assert agent.llm.model == "gpt-4o-mini"
     assert agent.allow_delegation is False
 
 
 def test_custom_llm():
     agent = Agent(
-        role="test role", goal="test goal", backstory="test backstory", llm="gpt-4"
+        role="test role", goal="test goal", backstory="test backstory", llm="gpt-4", inject_date=False
     )
     assert agent.llm.model == "gpt-4"
 
@@ -144,6 +147,7 @@ def test_custom_llm_with_langchain():
         goal="test goal",
         backstory="test backstory",
         llm=ChatOpenAI(temperature=0, model="gpt-4"),
+        inject_date=False,
     )
 
     assert agent.llm.model == "gpt-4"
@@ -158,6 +162,7 @@ def test_custom_llm_temperature_preservation():
         goal="temperature test goal",
         backstory="temperature test backstory",
         llm=langchain_llm,
+        inject_date=False,
     )
 
     assert isinstance(agent.llm, LLM)
@@ -1205,6 +1210,7 @@ def test_agent_max_retry_limit():
         goal="test goal",
         backstory="test backstory",
         max_retry_limit=1,
+        inject_date=False,
     )
 
     task = Task(
@@ -1988,6 +1994,7 @@ def test_get_knowledge_search_query():
         backstory="I have access to knowledge sources",
         llm=LLM(model="gpt-4"),
         knowledge_sources=[string_source],
+        inject_date=False,
     )
 
     task = Task(
